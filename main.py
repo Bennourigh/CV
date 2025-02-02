@@ -1,6 +1,5 @@
 import streamlit as st
 import streamlit.components.v1 as components
-from fpdf import FPDF
 
 # Load Framer Motion Animations
 components.html("""
