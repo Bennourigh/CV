@@ -1,126 +1,221 @@
 import streamlit as st
 import streamlit.components.v1 as components
+from pathlib import Path
+import pandas as pd
+import altair as alt
+# ────────────────────────────────────────────────────────────────────────────────
+# Page configuration
+# ────────────────────────────────────────────────────────────────────────────────
+st.set_page_config(
+    page_title="Ghassen Bennouri | Portfolio",
+    page_icon="🚀",
+    layout="wide",
+)
 
-# Load Framer Motion Animations
-components.html("""
-    <script>
-    function fadeInEffect() {
-        var elements = document.querySelectorAll('.animated-section');
-        elements.forEach(el => {
-            el.style.opacity = 0;
-            setTimeout(() => {
-                el.style.transition = "opacity 0.8s ease-in-out";
-                el.style.opacity = 1;
-            }, 100);
-        });
-    }
-    fadeInEffect();
-    </script>
-""", height=0)
+# ────────────────────────────────────────────────────────────────────────────────
+# Global color palette + component styles
+# ────────────────────────────────────────────────────────────────────────────────
+st.markdown(
+    """
+<style>
+:root {
+  --primary-color:#4CAF50;
+  --secondary-color:#FFFFFF;
+  --background-color:#F4F4F4;
+  --text-color:#333333;
+  --accent-blue:#0072ff;
+}
+html,body,[class*="css"]{font-family:Arial,Helvetica,sans-serif;background:var(--background-color);color:var(--text-color);} 
+/* Card container */
+.card{background:var(--secondary-color);border-left:6px solid var(--primary-color);padding:1.25rem 1.5rem;margin:1rem 0;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);} 
+.card-title{font-weight:700;font-size:1.1rem;margin-bottom:.25rem;} 
+.card-date{font-size:.9rem;color:var(--primary-color);margin-bottom:1rem;} 
+/* Animated progress bar */
+.progress-container{width:100%;background:rgba(0,0,0,.1);border-radius:8px;overflow:hidden;height:16px;margin-bottom:.75rem;}
+.progress-bar{height:100%;background:linear-gradient(90deg,#00c6ff,var(--accent-blue));animation:grow 1.5s ease-out forwards;}
+@keyframes grow{from{width:0}to{width:var(--value)}}
+</style>
+""",
+    unsafe_allow_html=True,
+)
 
-# Sidebar Navigation
+# Fade‑in for .animated-section blocks
+components.html(
+    """
+<script>
+window.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.animated-section').forEach(el=>{el.style.opacity=0;setTimeout(()=>{el.style.transition='opacity .8s';el.style.opacity=1;},100);});
+});
+</script>
+""",
+    height=0,
+)
+
+# ────────────────────────────────────────────────────────────────────────────────
+# Sidebar navigation
+# ────────────────────────────────────────────────────────────────────────────────
 st.sidebar.title("🚀 Navigate")
-page = st.sidebar.radio("Go to",
-    ["🏠 Home", "💼 Experience", "📂 Projects", "💡 Skills & 🌍 Languages", "🏆 Extracurricular"])
+page = st.sidebar.radio(
+    "Go to",
+    ["🏠 Home","🎓 Education","💼 Experience","📂 Projects","💡 Skills & 🌍 Languages","🏆 Extracurricular"],
+)
 
-# Home Section
+# ────────────────────────────────────────────────────────────────────────────────
+# Home
+# ────────────────────────────────────────────────────────────────────────────────
 if page == "🏠 Home":
-    st.markdown('<div class="animated-section"><h1>Mohamed Ghassen Bennouri</h1></div>', unsafe_allow_html=True)
-    st.image("profile.jpg", width=150)
-    st.markdown('<div class="animated-section"><h3>👨‍💻 Junior Software Developer | Digital Systems Enthusiast</h3></div>', unsafe_allow_html=True)
-    st.write("📍 Sokra, Ariana, Tunisia | 📞 +216 55341712 | ✉️ bennourigh@gmail.com")
-    st.markdown("[🔗 LinkedIn](https://www.linkedin.com/in/ghassen-bennouri-1a35b3252/) | [🔗 Facebook](https://www.facebook.com/ghbennouri/)")
-    st.subheader("💼 About Me")
-    st.write("""
-    Life taught me early on that purpose must be earned, not given. From working summer jobs in hospitality to crafting scalable digital systems, 
-    my journey is defined by resilience, reinvention, and relentless curiosity.
+    st.markdown('<div class="animated-section"><h1>Mohamed Ghassen Bennouri</h1></div>',unsafe_allow_html=True)
+    if Path("profile.jpg").exists():
+        st.image("profile.jpg",width=150)
+    st.markdown('<div class="animated-section"><h3>👨‍💻 Software Developer | Digital Systems Enthusiast</h3></div>',unsafe_allow_html=True)
+    st.write("📍  Ariana, Tunisia | 📞 +216 55341712 | ✉️ bennourigh@gmail.com")
+    st.write("Born 21 Jun 2000 | Tunisian")
+    st.markdown("[🔗 LinkedIn](https://www.linkedin.com/in/ghassen-bennouri-1a35b3252/)")
+    st.subheader("Profile")
+    st.write(
+        """Passionate about software architecture and information‑systems management, I couple strong training in Business Information Systems with hands‑on skills in full‑stack development, solution integration and production operations. Combining technical depth with a keen understanding of business processes and system administration, I stay relentlessly curious — particularly about fintech trends and the evolving WEB2 / WEB3 ecosystems."""
+    )
 
-    With a foundation in Business Information Systems and a deepening mastery of backend architectures, I specialize in building systems that aren’t 
-    just functional — they’re thoughtful. Whether I'm working with **CQRS, event sourcing, microservices**, or exploring how **Web3** reshapes trust, 
-    I approach tech as a craft with purpose.
+# ────────────────────────────────────────────────────────────────────────────────
+# Education
+# ────────────────────────────────────────────────────────────────────────────────
+elif page == "🎓 Education":
+    st.header("🎓 Academic Path")
+    edu = [
+        ("Sep 2024 — Present","Masters in Digital Management & Information Systems","Esprit School of Business, Ariana"),
+        ("Sep 2021 — Jun 2024","License in Business computing -> Information Systems","Esprit School of Business, Ariana"),
+        ("Sep 2020 — Jun 2021","License in Embedded Systems & IoT","Faculty of Sciences of Bizerte"),
+        ("Sep 2019 — Jun 2020","Baccalaureate in Mathematics","Lycée Tunis, Ariana"),
+    ]
+    for d,title,loc in edu:
+        st.markdown(f"<div class='card'><div class='card-title'>{title}</div><div class='card-date'>📅 {d}</div><div>{loc}</div></div>",unsafe_allow_html=True)
+    st.subheader("📜 Certificates & Courses")
+    st.write("IBM Full‑Stack Software Developer Professional Certificate • IS/IT Governance (Coursera)")
 
-    I’ve faced doubt, and distraction — yet each became a stepping stone. These challenges didn’t break me; they sharpened me.
-
-    Today, I aim to build tech with soul — tools that empower, solutions that scale, and systems that leave a mark. I learn fast, think deeply, 
-    and adapt quicker than most. And while others may envy the path, I choose to walk it anyway.
-
-    **If you're building for meaning — not just markets — let’s talk.**
-    """)
-
-# Experience Section
+# ────────────────────────────────────────────────────────────────────────────────
+# Experience & Internships
+# ────────────────────────────────────────────────────────────────────────────────
 elif page == "💼 Experience":
-    st.header("🧑‍💼 Work Experience")
-    
-    st.subheader("🖥️ Web Integrator (WordPress) – Cardio-Life, Ariana")
-    st.write("📅 Aug 2024 — Oct 2024")
-    st.write("""
-    - Designed and deployed a complete WordPress solution tailored to healthcare services.
-    - Customized plugins and themes for performance, usability, and accessibility.
-    - Led SEO improvements through on-page optimization and keyword targeting, boosting traffic by 35%.
-    - Integrated Google Analytics, Search Console, and performance tuning tools for actionable insights.
-    - Achieved Google PageSpeed Insight scores of 90+ via caching and image optimization.
-    """)
+    st.header("🚀 Freelance Experiences")
+    roles = [
+        ("🚀 Freelance Full‑Stack Developer — Djinston","Jan 2024 — Present",
+         "Led React / Laravel / Python micro‑services MVP; built real‑time APIs and data pipelines."),
+        ("🛠️ Freelance Backend Engineer — Nest.js (Freelance)","Jul 2023 — Dec 2023",
+         "Developed GraphQL & REST services with 95 % test coverage using Jest & SuperTest."),
+    ]
+    for title,dates,desc in roles:
+        st.markdown(f"<div class='card'><div class='card-title'>{title}</div><div class='card-date'>📅 {dates}</div><div>{desc}</div></div>",unsafe_allow_html=True)
 
-# Projects Section
+    st.subheader("📚 Internships & Major Projects")
+    internships = [
+        ("🛠️ Software Development Project — Cardio‑Life","Mar 2024 — Jul 2024",
+         """<ul>
+            <li>Built a modular health‑equipment platform on <b>Java 17</b> & <b>Axon Framework</b> (CQRS + Event Sourcing).</li>
+            <li>Developed <b>Angular 17</b> SPA synced via server‑sent events; gRPC for inter‑service comms.</li>
+            <li>Infra stack: Spring Gateway, Consul, Keycloak OIDC, Stripe, Vault.</li>
+         </ul>"""),
+        ("🔄 Workflow Intern — Cardio‑Life","May 2022 — Aug 2022",
+         """<ul>
+            <li>Documented SOPs and streamlined equipment workflows for a med‑tech start‑up.</li>
+            <li>Diagnosed device issues using diagnostic software; supported marketing‑policy analysis.</li>
+         </ul>"""),
+         ("🖥️ Web Integrator (WordPress) — Cardio‑Life","Aug 2024 — Oct 2024",
+         """<ul>
+            <li>Designed, developed and maintained a WordPress site with custom themes & plugins.</li>
+            <li>Implemented an inbound‑marketing strategy and on‑page SEO; +65 % organic traffic.</li>
+            <li>Optimised performance (caching, image compression) reaching PageSpeed ≥ 90.</li>
+         </ul>""")
+    ]
+    for title,dates,desc in internships:
+        st.markdown(f"<div class='card'><div class='card-title'>{title}</div><div class='card-date'>📅 {dates}</div><div>{desc}</div></div>",unsafe_allow_html=True)
+
+# ────────────────────────────────────────────────────────────────────────────────
+# Projects — Highlight remains unchanged (details already covered above)
+# ────────────────────────────────────────────────────────────────────────────────
 elif page == "📂 Projects":
-    st.header("📊 Projects")
+    st.header("📊 Highlight Project")
+    st.markdown(
+        """
+<div class='card'>
+  <div class='card-title'>🛠️ Modular Health Equipment Platform — Cardio‑Life</div>
+  <div class='card-date'>📅 Mar 2024 — Jul 2024</div>
+  <ul>
+    <li><b>Axon Framework</b> (CQRS + Event Sourcing) on <b>Java 17</b> Spring Micro‑services.</li>
+    <li>Frontend <b>Angular 17</b> with live state sync.</li>
+    <li>Infra: Axon Server (gRPC), Spring Gateway, Consul, Keycloak OIDC, Stripe, Vault.</li>
+  </ul>
+</div>
+""",
+        unsafe_allow_html=True,
+    )
 
-    st.subheader("🛠️ Software Development Project – Cardio-Life")
-    st.write("📅 Mar 2024 — Jul 2024")
-    st.write("""
-    - Designed a modular system using **Axon Framework** with CQRS and Event Sourcing for maximum scalability.
-    - Built and deployed an Angular 17 frontend with real-time state synchronization.
-    - Integrated **Axon Server**, gRPC, and RESTful APIs for hybrid communication architecture.
-    - Implemented secure authentication and authorization with **Keycloak** and OpenID Connect.
-    - Incorporated **Stripe API** for payment automation and **HashiCorp Vault/Consul** for service secrets and discovery.
-    - Delivered a robust, asynchronous and auditable microservices-ready architecture.
-    """)
-
-# Skills & Languages Section
+# ────────────────────────────────────────────────────────────────────────────────
+# Skills & Languages
+# ────────────────────────────────────────────────────────────────────────────────
 elif page == "💡 Skills & 🌍 Languages":
-    st.header("💡 Technical Skills")
+    
 
-    skill_levels = {
-        "⚡ TypeScript (Nest.js, Next.js, Angular)": 90,
-        "☕ Java (Spring Boot)": 80,
-        "🐘 PHP (Laravel, WordPress)": 85,
-        "🤖 ML / Data Integration (Python, Power BI, Talend)": 75,
-        "🗄️ Databases (PostgreSQL, MongoDB, Axon, EdgeDB)": 85,
-        "🚀 CI/CD & DevOps (GitHub Actions, Secure Secrets)": 80,
-        "🔎 SEO / AEO & Web Analytics Tools": 88
+    st.header("💡 Core Technical Skills")
+
+    skills = {
+        "⚡ TypeScript (Nest.js, Next.js, Angular)": 80,
+        "☕ Java (Spring Framework)":               70,
+        "🐘 PHP (Laravel, WordPress)":              80,
+        "🤖 Python (ML, Data integration, Talend)": 75,
+        "📊 Power BI / Data Viz":                  70,
+        "🗄️ Databases (PostgreSQL, MongoDB, AxonIQ)": 85,
+        "🐳 Docker / CI-CD (GitHub Actions)":       75,
+        "🔎 SEO / AEO & Web Analytics":            100,
     }
 
-    for skill, level in skill_levels.items():
-        st.markdown(f"<h4>{skill}</h4>", unsafe_allow_html=True)
-        components.html(f"""
-        <div class="animated-section">
-        <div style="width: {level}%; height: 15px; background: linear-gradient(90deg, #00c6ff, #0072ff); border-radius: 10px;"></div>
-        </div>
-        """, height=20)
+    # ── 1. Grid of native progress bars ────────────────────────────────────────
+    cols = st.columns(2)
+    for i, (skill, pct) in enumerate(skills.items()):
+        level = (
+            "Expert"       if pct >= 90 else
+            "Advanced"     if pct >= 80 else
+            "Proficient"   if pct >= 70 else
+            "Intermediate"
+        )
+        with cols[i % 2]:
+            st.markdown(f"**{skill}**")
+            st.progress(pct)
+            st.caption(f"{level} · {pct}%")
 
+    # ── 2. Optional “bird’s-eye” bar chart (Altair) ────────────────────────────
+    st.divider()
+    df = pd.DataFrame({"Skill": list(skills.keys()), "Proficiency": list(skills.values())})
+    chart = (
+        alt.Chart(df)
+        .mark_bar()
+        .encode(
+            x=alt.X("Proficiency:Q", title="Proficiency (%)", scale=alt.Scale(domain=[0, 100])),
+            y=alt.Y("Skill:N", sort="-x", title=None),
+            tooltip=["Skill", "Proficiency"]
+        )
+        .properties(height=300)
+    )
+    st.altair_chart(chart, use_container_width=True)
+
+    # ── 3. Languages with st.metric ────────────────────────────────────────────
     st.subheader("🌍 Languages")
-    languages = {
-        "🇺🇸 English": "Highly Proficient",
-        "🇫🇷 French": "Highly Proficient",
-        "🇹🇳 Arabic": "Native Speaker"
+    langs = {
+        "🇺🇸 English": "Highly proficient",
+        "🇫🇷 French":  "Highly proficient",
+        "🇹🇳 Arabic":  "Native",
     }
-
-    for lang, level in languages.items():
-        st.write(f"**{lang}:** {level}")
-
-# Extracurricular Activities
+    lang_cols = st.columns(len(langs))
+    for col, (lang, lvl) in zip(lang_cols, langs.items()):
+        col.metric(label=lang, value=lvl)
+# ────────────────────────────────────────────────────────────────────────────────
+# Extracurricular
+# ────────────────────────────────────────────────────────────────────────────────
 elif page == "🏆 Extracurricular":
-    st.header("🏆 Extracurricular & Volunteer Involvement")
-
-    st.subheader("🎭 Rotaract Club Amilcar Sidi Bou Said")
-    st.write("📅 Sep 2021 — Jun 2023")
-    st.write("📌 Founding Member – Led several local initiatives around community development and education.")
-    st.markdown("[📷 Instagram](https://www.instagram.com/tuniact_sidi_bou_said/)")
-
-    st.subheader("🎖️ Interact Club Amilcar Sidi Bou Said")
-    st.write("📅 Sep 2016 — Jun 2019")
-    st.write("💼 Roles held: Treasurer, Chief of Protocol & Sponsorship Team Lead.")
-
-    st.subheader("🩺 Basic-Life-Support Intervenant – European Resuscitation Council")
-    st.write("📅 Jun 2021 — Present")
-    st.write("Trained in emergency response and basic life-saving procedures.")
+    st.header("🏆 Extracurricular & Volunteer Work")
+    clubs=[
+        ("🎭 Rotaract Club Amilcar Sidi Bou Said — Founding Member","Sep 2021 — Jun 2023"),
+        ("🎖️ Interact Club Amilcar Sidi Bou Said — Treasurer & Team Lead","Sep 2016 — Jun 2019"),
+        ("🩺 Basic‑Life‑Support Intervenant — European Resuscitation Council","Jun 2021 — Present"),
+    ]
+    for title,dates in clubs:
+        st.markdown(f"<div class='card'><div class='card-title'>{title}</div><div class='card-date'>📅 {dates}</div></div>",unsafe_allow_html=True)
