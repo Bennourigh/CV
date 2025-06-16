@@ -158,14 +158,14 @@ elif page == "💡 Skills & 🌍 Languages":
     st.header("💡 Core Technical Skills")
 
     skills = {
-        "⚡ TypeScript (Nest.js, Next.js, Angular)": 80,
+        "⚡ TypeScript (Nest.js, Next.js, Angular)": 70,
         "☕ Java (Spring Framework)":               70,
         "🐘 PHP (Laravel, WordPress)":              80,
-        "🤖 Python (ML, Data integration, Talend)": 75,
-        "📊 Power BI / Data Viz":                  70,
-        "🗄️ Databases (PostgreSQL, MongoDB, AxonIQ)": 85,
-        "🐳 Docker / CI-CD (GitHub Actions)":       75,
-        "🔎 SEO / AEO & Web Analytics":            100,
+        "🤖 Python (ML, Data integration, Talend)": 90,
+        "📊 Power BI / Data Viz":                  80,
+        "🗄️ Databases (PostgreSQL, MongoDB, AxonIQ)": 90,
+        "🐳 Docker / CI-CD (GitHub Actions)":       50,
+        "🔎 SEO / AEO & Web Analytics":           90,
     }
 
     # ── 1. Grid of native progress bars ────────────────────────────────────────
@@ -187,15 +187,22 @@ elif page == "💡 Skills & 🌍 Languages":
     df = pd.DataFrame({"Skill": list(skills.keys()), "Proficiency": list(skills.values())})
     chart = (
         alt.Chart(df)
-        .mark_bar()
+        .mark_arc(innerRadius=50, outerRadius=100)
         .encode(
-            x=alt.X("Proficiency:Q", title="Proficiency (%)", scale=alt.Scale(domain=[0, 100])),
-            y=alt.Y("Skill:N", sort="-x", title=None),
+            theta=alt.Theta("Proficiency:Q", stack=True),
+            color=alt.Color("Skill:N", legend=alt.Legend(title="Skill")),
             tooltip=["Skill", "Proficiency"]
         )
-        .properties(height=300)
+        .properties(height=350, width=400, title="Skill Proficiency Distribution")
     )
-    st.altair_chart(chart, use_container_width=True)
+    st.altair_chart(
+        chart.configure_title(
+            fontSize=18,
+            anchor="start",
+            color="#4CAF50"
+        ),
+        use_container_width=True
+    )
 
     # ── 3. Languages with st.metric ────────────────────────────────────────────
     st.subheader("🌍 Languages")
