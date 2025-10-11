@@ -10,7 +10,7 @@ import altair as alt
 # ────────────────────────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Ghassen Bennouri | Portfolio",
-    page_icon="🚀",
+    page_icon="🚀🏴‍☠️",
     layout="wide",
 )
 
@@ -374,7 +374,7 @@ with tab_home:
         # Add contact information
         st.markdown("""
         <div style="text-align: center; margin-top: 1rem;">
-            <p>📍 Ariana, Tunisia | 📞 +216 55341712 | ✉️ bennourigh@gmail.com</p>
+            <p>📍 Ariana, Tunisia | 📞 +216 55341712 | ✉️ new0mgb@gmail.com</p>
             <p>🎂 Born 21 Jun 2000 | 🏳️ Tunisian</p>
             <a href="https://www.linkedin.com/in/ghassen-bennouri-1a35b3252/" style="color: var(--primary-color); text-decoration: none;">🔗 LinkedIn</a>
         </div>
