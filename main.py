@@ -9,10 +9,118 @@ import altair as alt
 # Page configuration
 # ────────────────────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Ghassen Bennouri | Portfolio",
-    page_icon="🚀🏴‍☠️",
+    page_title="MGB | Portfolio",
+    page_icon="🏴‍☠️",
     layout="wide",
 )
+
+# --- SEO + Social meta injection & sitemap generation --------------------------------
+def _inject_meta():
+    base_url = "https://bennouri-ghassen.streamlit.app"  # change if different
+    title = "Mohamed Ghassen Bennouri — Software Architect & Full‑Stack Developer"
+    description = ("Software architect and full‑stack developer specialized in scalable web "
+                   "and microservice architectures, event‑driven systems and digital product delivery.")
+    image = f"{base_url}/profile.jpg"  # change if hosted elsewhere
+    twitter_handle = "@your_twitter"  # optional: update or leave as placeholder
+    canonical = base_url
+
+    # JS that inserts meta tags into document.head (works in Streamlit)
+    js = f"""
+    <script>
+    (function(){{
+        try {{
+            const head = document.head || document.getElementsByTagName('head')[0];
+
+            function addMeta(tagName, attrs) {{
+                var el = document.createElement(tagName);
+                for (var k in attrs) el.setAttribute(k, attrs[k]);
+                head.appendChild(el);
+                return el;
+            }}
+
+            // Basic meta
+            addMeta('meta', {{ name: 'description', content: '{description}' }});
+            addMeta('link', {{ rel: 'canonical', href: '{canonical}' }});
+            addMeta('meta', {{ name: 'robots', content: 'index,follow' }});
+
+            // Open Graph
+            addMeta('meta', {{ property: 'og:title', content: '{title}' }});
+            addMeta('meta', {{ property: 'og:description', content: '{description}' }});
+            addMeta('meta', {{ property: 'og:type', content: 'website' }});
+            addMeta('meta', {{ property: 'og:url', content: '{canonical}' }});
+            addMeta('meta', {{ property: 'og:image', content: '{image}' }});
+
+            // Twitter Card
+            addMeta('meta', {{ name: 'twitter:card', content: 'summary_large_image' }});
+            addMeta('meta', {{ name: 'twitter:title', content: '{title}' }});
+            addMeta('meta', {{ name: 'twitter:description', content: '{description}' }});
+            addMeta('meta', {{ name: 'twitter:image', content: '{image}' }});
+            addMeta('meta', {{ name: 'twitter:site', content: '{twitter_handle}' }});
+
+            // Preconnect & preload for fonts and profile image
+            addMeta('link', {{ rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }});
+            addMeta('link', {{ rel: 'preload', href: '{image}', as: 'image' }});
+
+            // JSON-LD Person schema
+            var ld = document.createElement('script');
+            ld.type = 'application/ld+json';
+            ld.text = JSON.stringify({{
+                "@context": "https://schema.org",
+                "@type": "Person",
+                "name": "Mohamed Ghassen Bennouri",
+                "url": "{canonical}",
+                "image": "{image}",
+                "jobTitle": "Software Architect / Full‑Stack Developer",
+                "description": "{description}",
+                "sameAs": [
+                    "https://www.linkedin.com/in/ghassen-bennouri-1a35b3252/"
+                ]
+            }});
+            head.appendChild(ld);
+
+        }} catch(e) {{ console.error('SEO injection error', e); }}
+    }})();
+    </script>
+    """
+    components.html(js, height=0)
+
+def _write_sitemap(base_url="https://bennouri-ghassen.streamlit.app"):
+    """
+    Generate sitemap.xml in repo root (only sitemap; no robots.txt).
+    Includes main page and common section anchors for better crawl hints.
+    """
+    try:
+        urls = [
+            base_url,
+            f"{base_url}#home",
+            f"{base_url}#education",
+            f"{base_url}#experience",
+            f"{base_url}#projects",
+            f"{base_url}#skills",
+            f"{base_url}#extracurricular",
+        ]
+
+        url_entries = "\n".join(
+            f"""  <url>
+    <loc>{u}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>""" for u in urls
+        )
+
+        sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{url_entries}
+</urlset>"""
+
+        Path("sitemap.xml").write_text(sitemap, encoding="utf-8")
+    except Exception:
+        # keep silent on failure to avoid breaking the app
+        pass
+
+# Run SEO helpers
+_inject_meta()
+_write_sitemap()
 
 # ────────────────────────────────────────────────────────────────────────────────
 # Global color palette + component styles with responsiveness
@@ -406,7 +514,7 @@ with tab_edu:
     st.markdown('<div class="centered-content">', unsafe_allow_html=True)
     st.header("🎓 Academic Path")
     edu = [
-        ("Sep 2024 — Present", "Masters in Digital Management & Information Systems", "Esprit School of Business, Ariana"),
+        ("Sep 2024 — Jun 2025", "Masters in Digital Management & Information Systems", "Esprit School of Business, Ariana"),
         ("Sep 2021 — Jun 2024", "License in Business computing -> Information Systems", "Esprit School of Business, Ariana"),
         ("Sep 2020 — Jun 2021", "License in Embedded Systems & IoT", "Faculty of Sciences of Bizerte"),
         ("Sep 2019 — Jun 2020", "Baccalaureate in Mathematics", "Lycée Tunis, Ariana"),
