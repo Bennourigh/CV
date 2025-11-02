@@ -581,6 +581,13 @@ with tab_exp:
             <li>Implemented inbound‑marketing strategy and on‑page SEO; increased organic traffic by 65 %.</li>
             <li>Optimized performance (caching, image compression) achieving PageSpeed ≥ 90.</li>
          </ul>"""),
+         ("🖥️ Web Integrator (Angular) — Cardio‑Life-Backend", "Aug 2025 — Oct 2025",
+         """<ul>
+            <li>Designed, developed, and maintained a Angular site with custom themes & plugins.</li>
+            <li>linked app with firebase to perform CRUD operations.</li>
+            <li>Implemented inbound‑marketing strategy and on‑page SEO; increased organic traffic by 65 %.</li>
+            <li>Optimized performance (caching, image compression) achieving PageSpeed ≥ 90.</li>
+         </ul>"""),
     ]
     for title, dates, desc in internships:
         st.markdown(f"""
