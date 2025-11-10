@@ -618,6 +618,16 @@ with tab_proj:
             <li>Infra stack: Spring Gateway, Consul, Keycloak OIDC, Stripe, Vault.</li>
           </ul>
         </div>
+         <div class='card'>
+          <div class='card-title'>🛠️ Modular Health Equipment Platform — Cardio‑Life</div>
+          <div class='card-date'>📅 septemeber 2025 — september 2025</div>
+          <ul>
+           <li>Built a modular Health Equipment Management & performance tracking platform.</li>
+            
+            <li>Frontend using <b>Angular 17</b> SPA with state management.</li>
+            <li>Implemented an Enterprise Resource Planner on a variety of processes in the workflow.</li>
+          </ul>
+        </div>
         """,
         unsafe_allow_html=True,
     )
