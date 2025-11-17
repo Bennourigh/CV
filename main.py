@@ -514,6 +514,7 @@ with tab_edu:
     st.markdown('<div class="centered-content">', unsafe_allow_html=True)
     st.header("🎓 Academic Path")
     edu = [
+         ("Sep 2025 — Present", "Masters in Business Analytics", "Esprit School of Business, Ariana"),
         ("Sep 2024 — Jun 2025", "Masters in Digital Management & Information Systems", "Esprit School of Business, Ariana"),
         ("Sep 2021 — Jun 2024", "License in Business computing -> Information Systems", "Esprit School of Business, Ariana"),
         ("Sep 2020 — Jun 2021", "License in Embedded Systems & IoT", "Faculty of Sciences of Bizerte"),
