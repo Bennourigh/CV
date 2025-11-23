@@ -550,7 +550,7 @@ with tab_exp:
     st.header("🚀 Freelance Experiences")
     roles = [
         ("🚀 Freelance Full‑Stack Developer — Djinston", "Jan 2024 — Present",
-         "Led React / Laravel / Python micro‑services MVP; built real‑time APIs and data pipelines."),
+         "Led React / Laravel / Python micro‑services MVP; built REST APIs and data pipelines."),
         ("🛠️ Freelance Backend Developer — Nest.js (Freelance)", "Jul 2023 — Dec 2023",
          "Developed GraphQL & REST services with 95 % test coverage using Jest & SuperTest."),
     ]
@@ -587,7 +587,6 @@ with tab_exp:
             <li>Designed, developed, and maintained a Angular site with custom themes & plugins.</li>
             <li>linked app with firebase to perform CRUD operations.</li>
             <li>Implemented inbound‑marketing strategy and on‑page SEO . </li>
-            
          </ul>"""),
     ]
     for title, dates, desc in internships:
