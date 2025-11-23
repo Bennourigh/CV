@@ -586,8 +586,8 @@ with tab_exp:
          """<ul>
             <li>Designed, developed, and maintained a Angular site with custom themes & plugins.</li>
             <li>linked app with firebase to perform CRUD operations.</li>
-            <li>Implemented inbound‑marketing strategy and on‑page SEO; increased organic traffic by 65 %.</li>
-            <li>Optimized performance (caching, image compression) achieving PageSpeed ≥ 90.</li>
+            <li>Implemented inbound‑marketing strategy and on‑page SEO . </li>
+            
          </ul>"""),
     ]
     for title, dates, desc in internships:
@@ -624,9 +624,8 @@ with tab_proj:
           <div class='card-date'>📅 septemeber 2025 — september 2025</div>
           <ul>
            <li>Built a modular Health Equipment Management & performance tracking platform.</li>
-            
-            <li>Frontend using <b>Angular 17</b> SPA with state management.</li>
-            <li>Implemented an Enterprise Resource Planner on a variety of processes in the workflow.</li>
+           <li>Frontend using <b>Angular 17</b> SPA with state management.</li>
+           <li>Implemented an Enterprise Resource Planner on a variety of processes in the workflow.</li>
           </ul>
         </div>
         """,
