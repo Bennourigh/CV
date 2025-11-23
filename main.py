@@ -565,12 +565,7 @@ with tab_exp:
 
     st.subheader("📚 Internships & Major Projects")
     internships = [
-        ("🛠️ Software Development Project — Cardio‑Life", "Mar 2024 — Jul 2024",
-         """<ul>
-            <li><b>Axon Framework</b> (CQRS + Event Sourcing) on <b>Java 17</b> Spring Micro‑services.</li>
-            <li>Frontend <b>Angular 17</b> with live state sync.</li>
-            <li>Infra: Axon Server (gRPC), Spring Gateway, Consul, Keycloak OIDC, Stripe, Vault.</li>
-         </ul>"""),
+       
         ("🔄 Workflow Intern — Cardio‑Life", "May 2022 — Aug 2022",
          """<ul>
             <li>Documented SOPs and streamlined equipment workflows for a med‑tech start‑up.</li>
@@ -581,6 +576,12 @@ with tab_exp:
             <li>Designed, developed, and maintained a WordPress site with custom themes & plugins.</li>
             <li>Implemented inbound‑marketing strategy and on‑page SEO; increased organic traffic by 65 %.</li>
             <li>Optimized performance (caching, image compression) achieving PageSpeed ≥ 90.</li>
+         </ul>"""),
+          ("🛠️ Software Development Project — Cardio‑Life", "Mar 2024 — Jul 2024",
+         """<ul>
+            <li><b>Axon Framework</b> (CQRS + Event Sourcing) on <b>Java 17</b> Spring Micro‑services.</li>
+            <li>Frontend <b>Angular 17</b> with live state sync.</li>
+            <li>Infra: Axon Server (gRPC), Spring Gateway, Consul, Keycloak OIDC, Stripe, Vault.</li>
          </ul>"""),
          ("🖥️ Web Integrator (Angular) — Cardio‑Life-Backend", "Aug 2025 — Oct 2025",
          """<ul>
